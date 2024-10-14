@@ -316,6 +316,7 @@ export interface WebDAVClient {
         options?: StatOptions
     ) => Promise<FileStat | ResponseDataDetailed<FileStat>>;
     unlock: (path: string, token: string, options?: WebDAVMethodOptions) => Promise<void>;
+    setProperties: (filePath: string, props: Record<string, unknown>) => Promise<boolean>;
 }
 
 export interface WebDAVClientContext {

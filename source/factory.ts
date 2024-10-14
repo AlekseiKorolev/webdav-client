@@ -39,6 +39,7 @@ import {
     WebDAVClientOptions,
     WebDAVMethodOptions
 } from "./types.js";
+import { setProperties } from "./operations/setProperties.js";
 
 const DEFAULT_CONTACT_HREF =
     "https://github.com/perry-mitchell/webdav-client/blob/master/LOCK_CONTACT.md";
@@ -124,6 +125,8 @@ export function createClient(remoteURL: string, options: WebDAVClientOptions = {
         },
         stat: (path: string, options?: StatOptions) => getStat(context, path, options),
         unlock: (path: string, token: string, options?: WebDAVMethodOptions) =>
-            unlock(context, path, token, options)
+            unlock(context, path, token, options),
+        setProperties: (filePath: string, props: Record<string, unknown>) =>
+            setProperties(context, filePath, props)
     };
 }
