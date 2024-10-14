@@ -676,6 +676,35 @@ await client.unlock("/file.doc", lock.token);
 
 _`options` extends [method options](#method-options)._
 
+#### setProperties
+
+Write properties to a remote file. Returns `false` when file was not written, and `true` otherwise.\
+Used `PROPFIND` method under the hood.
+```xml
+<D:propertyupdate xmlns:D="DAV:">
+    <D:set>
+        <D:prop>
+            <D:property1>value1</D:property1>
+            <D:property2>value2</D:property2>
+        </D:prop>
+    </D:set>
+</D:propertyupdate>
+```
+```typescript
+await client.setProperties("/my/file.jpg", props);
+```
+
+```typescript
+(filename: string, props: Record<string, unknown>) => Promise<boolean>
+```
+
+| Argument          | Required  | Description                                   |
+|-------------------|-----------|-----------------------------------------------|
+| `filename`        | Yes       | File to write to.                             |
+| `props`           | Yes       | The data to write as file properties. |
+
+To get the properties along with the file, use `{ details: true }`
+
 ##### Custom properties
 
 For requests like `stat`, which use the `PROPFIND` method under the hood, it is possible to provide a custom request body to the method so that the server may respond with additional/different data. Overriding of the body can be performed by setting the `data` property in the [method options](#method-options).
