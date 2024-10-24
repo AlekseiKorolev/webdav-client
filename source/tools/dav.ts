@@ -34,9 +34,11 @@ function getParser(): XMLParser {
                 return;
             }
             return tagValue;
-        }
+        },
         // We don't use the processors here as decoding is done manually
         // later on - decoding early would break some path checks.
+        ignoreAttributes: false,
+        attributeNamePrefix : "@_"
     });
 }
 
