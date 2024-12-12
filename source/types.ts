@@ -283,6 +283,7 @@ export interface WebDAVClient {
         options?: GetFileContentsOptions
     ) => Promise<BufferLike | string | ResponseDataDetailed<BufferLike | string>>;
     getFileDownloadLink: (filename: string) => string;
+    getFileSecureDownloadLink: (filename: string) => Promise<string>;
     getFileUploadLink: (filename: string) => string;
     getHeaders: () => Headers;
     getQuota: (

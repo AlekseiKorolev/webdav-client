@@ -8,7 +8,11 @@ import { customRequest } from "./operations/customRequest.js";
 import { deleteFile } from "./operations/deleteFile.js";
 import { exists } from "./operations/exists.js";
 import { getDirectoryContents } from "./operations/directoryContents.js";
-import { getFileContents, getFileDownloadLink } from "./operations/getFileContents.js";
+import {
+    getFileContents,
+    getFileDownloadLink,
+    getFileSecureDownloadLink
+} from "./operations/getFileContents.js";
 import { lock, unlock } from "./operations/lock.js";
 import { getQuota } from "./operations/getQuota.js";
 import { getStat } from "./operations/stat.js";
@@ -100,6 +104,8 @@ export function createClient(remoteURL: string, options: WebDAVClientOptions = {
         getFileContents: (filename: string, options?: GetFileContentsOptions) =>
             getFileContents(context, filename, options),
         getFileDownloadLink: (filename: string) => getFileDownloadLink(context, filename),
+        getFileSecureDownloadLink: (filename: string) =>
+            getFileSecureDownloadLink(context, filename),
         getFileUploadLink: (filename: string) => getFileUploadLink(context, filename),
         getHeaders: () => Object.assign({}, context.headers),
         getQuota: (options?: GetQuotaOptions) => getQuota(context, options),

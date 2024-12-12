@@ -13,6 +13,7 @@ import {
     ResponseDataDetailed,
     WebDAVClientContext
 } from "../types.js";
+import { parseXML } from "../tools/dav.js";
 
 const TRANSFORM_RETAIN_FORMAT = (v: any) => v;
 
@@ -108,4 +109,29 @@ export function getFileDownloadLink(context: WebDAVClientContext, filePath: stri
             );
     }
     return url;
+}
+
+export async function getFileSecureDownloadLink(
+    context: WebDAVClientContext,
+    filePath: string
+): Promise<string> {
+    let url = joinURL(context.remoteURL, encodePath(filePath));
+    const requestOptions = prepareRequestOptions(
+        {
+            url,
+            method: "PROPFIND"
+        },
+        context,
+        {}
+    );
+    const response = await request(requestOptions, context);
+    handleResponseCode(context, response);
+    const responseData = await response.text();
+    if (!responseData) {
+        throw new Error("Empty response");
+    }
+    const davResp = await parseXML(responseData);
+    const link = String(davResp.multistatus.response[0].propstat.prop["downloadlink"]);
+    const fullUrl = joinURL(context.remoteURL, link);
+    return fullUrl;
 }
